@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { createStore } from "redux";
 
-function App() {
+function MyButton() {
+  const [count, setCount] = useState(0);
+  function handleClick() {
+    setCount(count + 1);
+  }
+  return <button onClick={handleClick}>Click {count} times</button>;
+}
+
+export default function MyApp() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Counters that update separately</h1>
+      <MyButton />
+      <MyButton />
+
+      <h1>Redux in console</h1>
     </div>
   );
 }
 
-export default App;
+const initialState = {
+  name: "Masha",
+  secondName: "Javadian",
+};
+
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case "ChangeName":
+      return { ...state, name: action.payload };
+
+    case "ChangeSecondName":
+      return { ...state, secondName: action.payload };
+    default:
+      return { ...state };
+  }
+}
+
+const store = createStore(reducer);
+
+console.log(store.getState());
+
+const changeName = {
+  type: "ChangeName",
+  payload: "Maria",
+};
+
+const changeSecondName = {
+  type: "ChangeSecondName",
+  payload: "Javadyan",
+};
+
+store.dispatch(changeName);
+console.log(store.getState());
+store.dispatch(changeSecondName);
+console.log(store.getState());
