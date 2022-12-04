@@ -22,7 +22,7 @@ export default function MyApp() {
 }
 
 const initialState = {
-  name: "Masha",
+  name: "Karen",
   secondName: "Javadian",
 };
 
